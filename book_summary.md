@@ -107,6 +107,34 @@ Explores functions as fundamental building blocks bridging programming and mathe
 - **Functions as Objects** — First-class objects: assignable, passable as arguments (e.g., to `fsolve` or `quad`), and usable in closures or partial applications.
 - **Special Function Types** — Recursive functions (with efficiency warnings) and anonymous `lambda` functions for concise expressions.
 - **Decorators and Documentation** — Documenting with docstrings; using decorators to modify function behavior without altering internal definitions.
+---
+ ```markdown
+# Chapter Summaries: Scientific Computing with Python
+
+## Chapter 8: Classes
+This chapter introduces **object-oriented programming (OOP)** as a way to group data and functionality, specifically focusing on how these constructs reflect mathematical structures.
+
+### Key Concepts
+*   **Definitions:** Objects are instances of **classes**, equipped with **attributes** (data) and **methods** (functions).
+*   **Operator Overloading:** Custom classes can implement standard mathematical symbols (e.g., `+`, `*`) using special methods like `__add__` and `__mul__`.
+*   **Attribute Management:** The `property` function is used to create **getter and setter methods**, allowing attributes that depend on each other to update automatically.
+*   **Inheritance:** Subclasses can inherit behavior from a **parent class**. This is demonstrated through an abstract solver class for ordinary differential equations that is specialized into specific methods like "Explicit Euler".
+*   **Class vs. Instance:** The chapter distinguishes between **bound and unbound methods**, as well as **class attributes and class methods**, which allow data access before an instance is even created.
+*   **Advanced Usage:** It explores **encapsulation** and using **classes as decorators** to collect data across multiple function calls.
+
+---
+
+## Chapter 9: Iterating
+This chapter explores **iteration** as a fundamental operation in scientific computing, moving beyond basic `for` loops to more memory-efficient and mathematically aligned structures.
+
+### Key Concepts
+*   **Iterators and Generators:** Users learn to create custom **generator objects** using the `yield` keyword. Unlike lists, iterators are "disposable" and are exhausted once they have been fully traversed.
+*   **The `itertools` Module:** This module provides tools for advanced iteration, such as `count` for infinite loops and `islice` to safely truncate them.
+*   **Mathematical Applications:** Iterators are applied to sequences like the **Fibonacci sequence**, the **Arithmetic-Geometric Mean (AGM)**, and **convergence acceleration** techniques (Aitken's $\Delta^2$-method).
+*   **Efficiency Patterns:** The text compares different ways to fill lists, recommending **iterators and generator expressions** over the `append` method for better memory management and flexibility.
+*   **Loop Control:** Detailed coverage of `break`, `continue`, and the `else` clause in loops.
+*   **Safety and Performance:** The authors advise using **finite iterators** over `while` loops to avoid being trapped in infinite processes and suggest avoiding **recursion** in Python due to function call overhead and recursion depth limits.
+```
 
 ---
 
