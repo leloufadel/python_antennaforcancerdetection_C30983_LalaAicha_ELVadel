@@ -231,8 +231,7 @@ The final chapter bundles all previously introduced concepts into three longer, 
 ### Key Concepts
 *   **Polynomial Class:** A detailed design of a class for polynomials, covering monomial and **Newton representations**, derivative computation, and finding zeros via **companion matrices**.
 *   **Scientific Applications:** The text demonstrates **spectral clustering** and solving **initial value problems** for ordinary differential equations (e.g., the mathematical pendulum).
-```
-  
+     
   ---
 
 ## Recommended Setup
