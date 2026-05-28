@@ -108,8 +108,6 @@ Explores functions as fundamental building blocks bridging programming and mathe
 - **Special Function Types** — Recursive functions (with efficiency warnings) and anonymous `lambda` functions for concise expressions.
 - **Decorators and Documentation** — Documenting with docstrings; using decorators to modify function behavior without altering internal definitions.
 ---
- ```markdown
-# Chapter Summaries: Scientific Computing with Python
 
 ## Chapter 8: Classes
 This chapter introduces **object-oriented programming (OOP)** as a way to group data and functionality, specifically focusing on how these constructs reflect mathematical structures.
@@ -134,9 +132,8 @@ This chapter explores **iteration** as a fundamental operation in scientific com
 *   **Efficiency Patterns:** The text compares different ways to fill lists, recommending **iterators and generator expressions** over the `append` method for better memory management and flexibility.
 *   **Loop Control:** Detailed coverage of `break`, `continue`, and the `else` clause in loops.
 *   **Safety and Performance:** The authors advise using **finite iterators** over `while` loops to avoid being trapped in infinite processes and suggest avoiding **recursion** in Python due to function call overhead and recursion depth limits.
-```
-
----
+ 
+  ---
 
 ## Recommended Setup
 
