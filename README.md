@@ -1,11 +1,12 @@
-# NeuroScan AI — Brain Tumor Detection Flask App
+# Breast Tumor Detection - Flask Web App
 
-A clean, production-ready Flask web app that wraps your ensemble tumor detection
-models behind a polished drag-and-drop UI.
+This is a small Flask application I built to test the ensemble model from my
+machine learning pipeline on new patient data. You upload a CSV or Excel file
+with the extracted features and it runs the file through the same scaler, PCA,
+and four classifiers used during training, then shows the prediction from
+each model along with the final ensemble verdict.
 
----
-
-## Project Structure
+## Folder structure
 
 ```
 brain_tumor_app/
@@ -33,8 +34,9 @@ pip install -r requirements.txt
 ```
 
 ### 2. Copy your saved models
-After running your training script, copy the `saved_models/` folder into
-`brain_tumor_app/`:
+Copy the models you trained earlier into the app folder. If you ran the
+training script already, the `saved_models/` folder should already exist -
+just move it here:
 ```bash
 cp -r saved_models/ brain_tumor_app/saved_models/
 ```
@@ -48,49 +50,55 @@ python app.py
 Then open **http://localhost:5000** in your browser.
 
 ---
+Open `http://localhost:5000` in a browser.
 
-## How it works
+## What the app actually does
 
-1. User uploads a `.csv`, `.xlsx`, or `.xls` file (576 features per row).
-2. Flask reads the file, flattens it to a 1D array.
-3. If the array length ≠ 576, it's resampled via interpolation.
-4. StandardScaler → PCA (100 components) → 4 classifiers + Ensemble.
-5. Results are returned as JSON and rendered in the UI.
+When a file is uploaded, the backend:
 
-### Input format
-- A single row of **576 float values** (the rich feature vector).
-- Produced by `extract_rich_features_single()` from your training script.
-- No header row needed (header=None).
+1. Reads the CSV/Excel file and flattens it into a single array of numbers
+2. Checks the length - it should be 576 (8 statistics x 72 antennas). If it's
+   not exactly 576, the app resamples it using linear interpolation so it
+   fits, and flags this in the response so the result isn't treated as fully
+   reliable
+3. Applies the same StandardScaler and PCA that were fit during training
+4. Runs the 100-dimensional PCA vector through the four trained classifiers
+   (SVM, Random Forest, Gradient Boosting, KNN) and the soft-voting ensemble
+5. Sends back a JSON response with each model's individual prediction, the
+   ensemble's final verdict, and a confidence score
 
----
+## Input format
 
-## API endpoint
+The uploaded file should contain one row of 576 values - the feature vector
+produced by `extract_rich_features_single()` in the training script. No
+header row.
 
-### `POST /predict`
-**Form data:** `file` — a .csv/.xlsx file
+## API
 
-**Response JSON:**
+`POST /predict`, form field `file`.
+
+Example response:
 ```json
 {
-  "verdict":       "Tumor" | "Healthy",
-  "is_tumor":      true | false,
-  "confidence":    87.3,
-  "tumor_votes":   3,
+  "verdict": "Tumor",
+  "is_tumor": true,
+  "confidence": 87.3,
+  "tumor_votes": 3,
   "healthy_votes": 1,
   "individual": [
-    { "model": "SVM (RBF)", "prediction": "Tumor", "confidence": 91.2, "is_tumor": true },
-    ...
+    { "model": "SVM (RBF)", "prediction": "Tumor", "confidence": 91.2, "is_tumor": true }
   ],
-  "warning":    "Strong model agreement — high suspicion of tumor" | null,
-  "resampled":  false,
+  "warning": "Strong model agreement - high suspicion of tumor",
+  "resampled": false,
   "feature_count": 576,
-  "filename":   "patient_scan.csv"
+  "filename": "patient_scan.csv"
 }
 ```
 
----
+`warning` is null if there's nothing to flag.
 
-## Generating test files
+## Testing
 
-Your training script already generates `patient_tumor.csv` and
-`patient_healthy.csv`. Use those to test the app immediately.
+The training script generates two test files, `patient_tumor.csv` and
+`patient_healthy.csv`. These can be uploaded directly to check the app is
+working correctly before testing with new data.
